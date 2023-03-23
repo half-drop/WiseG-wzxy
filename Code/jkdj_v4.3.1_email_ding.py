@@ -109,7 +109,7 @@ def check_jkdk():
         data1 = {
             'locationType': 0,
             'inSchool': 0,
-            'location': "中国/" + province + "/" + city + "/" + district
+            'location': "中国/" + province + "/" + city + "/" + district + "/" + street
         }
     else:
         data1 = {
@@ -119,8 +119,8 @@ def check_jkdk():
             'signArea': signArea
         }
     data2 = {
-        "t1": get_random_temperature(),
-        "t2": "[\"无特殊情况，身体健康；\"]",
+        "t1": "[\"无特殊情况，身体健康；\"]",
+        "t2": get_random_temperature(),
         "locationState": -1,  # 位置异动：-1正常 0待确认 1异常
         "type": 0,  # 异常状态：0正常 1异常
     }
@@ -193,7 +193,7 @@ def get_status(status):
     elif status == 10004:
         return "× 密码修改失败！"
     elif status == 0:
-        return "√ 健康打卡成功！"
+        return "健康打卡成功~"
     elif status == 1:
         return "〇 打卡时间已过"
     elif status == -10:
@@ -223,9 +223,9 @@ def observer(res):
 # 发送邮件
 def send_email(status,s_msg):
     try:
-        msg = MIMEText("🌹我可以不在校园🌹\n" + get_status(status)+s_msg, 'plain', 'utf-8')
-        msg['From'] = formataddr(["🌹我可以不在校园🌹", mySender])  # 双引号内是发件人昵称，可以自定义
-        msg['To'] = formataddr(["不爱打卡的大冤种", myReceiver])  # 双引号内是收件人邮箱昵称，可以自定义
+        msg = MIMEText("Wise_G已经帮你完成【我在校园健康打卡】了喔>_<，" + get_status(status)+s_msg, 'plain', 'utf-8')
+        msg['From'] = formataddr(["Wise_G打卡服务", mySender])  # 双引号内是发件人昵称，可以自定义
+        msg['To'] = formataddr(["half_drop", myReceiver])  # 双引号内是收件人邮箱昵称，可以自定义
         msg['Subject'] = get_status(status)
         server = smtplib.SMTP_SSL("smtp.qq.com", 465)
         server.login(mySender, myToken)
@@ -256,7 +256,7 @@ def send_ding(status,s_msg):
     send_data = {
         "msgtype": "text",
         "text": {
-            "content": "🌹我可以不在校园🌹\n" + get_status(status)+s_msg
+            "content": "Wise_G已经帮你完成【我在校园健康打卡】了喔 >_<"
         }
     }
     if status is not 0:
